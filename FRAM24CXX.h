@@ -1,5 +1,6 @@
-
-
+//idea from
+//https://github.com/SV-Zanshin/MB85_FRAM/blob/master/MB85_FRAM.h
+//https://github.com/sosandroid/FRAM_MB85RC_I2C
 
 
 #ifndef _FRAM24CXX_h_
@@ -15,7 +16,7 @@
 #ifndef SERIAL_DEBUG
 #define SERIAL_DEBUG 1
 #endif
-
+#include <Wire.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -23,6 +24,7 @@
 #define MAXADDRESS_04 512
 #define MAXADDRESS_16 2048
 #define ERROR_11 11 // Memory address out of range
+#define OK_1 1 // Memory address out of range
 class FRAM24CXX {
   public:
     FRAM24CXX (uint8_t address, uint16_t chipDensity);
@@ -37,6 +39,7 @@ class FRAM24CXX {
       for (uint8_t i = 0; i < sizeof(T); i++)
         Wire.write(*bytePtr++);
       Wire.endTransmission();
+	  return OK_1;
     }
 
 
@@ -51,6 +54,7 @@ class FRAM24CXX {
       Wire.requestFrom(chipaddress,  sizeof(T));
       for (uint8_t i = 0; i < sizeof(T); i++)
         if (Wire.available()) *bytePtr++ = Wire.read();
+	return OK_1;
     }
 
   private:

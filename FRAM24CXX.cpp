@@ -1,3 +1,8 @@
+//idea from
+//https://github.com/SV-Zanshin/MB85_FRAM/blob/master/MB85_FRAM.h
+//https://github.com/sosandroid/FRAM_MB85RC_I2C
+
+
 #include <stdlib.h>
 #include <Wire.h>
 #include "FRAM24CXX.h"
@@ -52,6 +57,7 @@ void FRAM24CXX::I2CAddressAdapt(uint16_t framAddr) {
 
 
 void FRAM24CXX::begin(void) {
+	  Wire.begin();
 #if defined(SERIAL_DEBUG) && (SERIAL_DEBUG == 1)
   if (!Serial) Serial.begin(115200);
   if (Serial) {
